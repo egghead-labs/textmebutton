@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Set up your box | DailyDoseBox</title>
+<meta name="description" content="Got a DailyDoseBox? Enter the three words printed on the lid to set it up. No account to hunt for, no serial numbers.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="/" style="color:inherit"><span class="dot"></span> DailyDoseBox</a>
+    <nav>
+      <a href="/#how">How it works</a>
+      <a href="/faq.html">FAQ</a>
+      <a href="/pricing.html">Pricing</a>
+      <a class="navcta" href="/#order">Pre-order</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero-min">
+  <div class="wrap">
+    <div class="enter">
+      <span class="badge">Set up your box</span>
+      <h1>Enter your three words.</h1>
+      <p style="color:var(--muted);font-size:18px">They are printed on the lid of your box, like <b>maple . river . otter</b>. That is all you need, no account to find, no serial number to type.</p>
+      <form id="wordForm">
+        <div class="words">
+          <input id="w1" placeholder="word" autocomplete="off" autocapitalize="off" spellcheck="false" required>
+          <input id="w2" placeholder="word" autocomplete="off" autocapitalize="off" spellcheck="false" required>
+          <input id="w3" placeholder="word" autocomplete="off" autocapitalize="off" spellcheck="false" required>
+        </div>
+        <p class="err" id="err"></p>
+        <button class="btn" type="submit" style="width:100%">Set up my box</button>
+      </form>
+      <p class="hint" style="margin-top:18px">Scanning the QR on the lid does this for you automatically. Just trying it out? Use <a href="/demo/maple.river.otter">maple.river.otter</a>.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div><a href="/">Home</a><a href="/pricing.html">Pricing</a><a href="/faq.html">FAQ</a><a href="/demo.html">Set up a box</a></div>
+    <div>Not a medical device. A daily check-in aid, not a substitute for medical care.</div>
+  </div>
+</footer>
+
+<script>
+  var clean = function(s){ return (s||'').trim().toLowerCase().replace(/[^a-z]/g,''); };
+  document.getElementById('wordForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var a=clean(w1.value), b=clean(w2.value), c=clean(w3.value);
+    if(!a||!b||!c){ document.getElementById('err').textContent='Please enter all three words.'; return; }
+    location.href = '/demo/' + a + '.' + b + '.' + c;
+  });
+</script>
+</body>
+</html>

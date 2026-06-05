@@ -41,9 +41,12 @@
 </style>
 </head>
 <body>
-<div class="top"><div class="wrap">
-  <div class="brand"><span class="dot"></span> DailyDoseBox</div>
-  <small id="boxlabel">Setting up box …</small>
+<div class="top"><div class="wrap" style="display:flex;justify-content:space-between;align-items:center">
+  <div>
+    <a class="brand" href="/" style="color:#fff;text-decoration:none"><span class="dot"></span> DailyDoseBox</a>
+    <small id="boxlabel">Setting up box …</small>
+  </div>
+  <a href="/" style="color:#9FB8C2;font-size:13px;text-decoration:none">Back to site</a>
 </div></div>
 
 <main class="wrap">
@@ -51,6 +54,15 @@
   <form id="setupForm">
     <h1>Set up this box</h1>
     <p class="sub">Takes about a minute. You can change any of it later from this same link.</p>
+
+    <div class="card">
+      <h2>Your account</h2>
+      <p style="margin:0 0 6px;color:var(--muted);font-size:14px">New here? We create your account from your email. Already have one? Same email signs you in.</p>
+      <label for="email">Email</label>
+      <input id="email" type="email" placeholder="you@email.com" required>
+      <label for="phone">Your mobile (for alerts)</label>
+      <input id="phone" type="tel" placeholder="Mobile number">
+    </div>
 
     <div class="card">
       <h2>Who is it for</h2>
@@ -79,8 +91,8 @@
 
     <div class="card">
       <h2>Spoken message (optional)</h2>
-      <label for="voice">Played out loud in the room if the box stays shut</label>
-      <input id="voice" placeholder='e.g. "Hi Mom, time for your morning pills."'>
+      <label for="voice">Played out loud in the room if the box stays shut. Keep it short, about 15 seconds.</label>
+      <input id="voice" maxlength="140" placeholder='e.g. "Hi Mom, time for your morning pills."'>
     </div>
 
     <div class="card ladder">
@@ -108,9 +120,12 @@
 </main>
 
 <script>
-  // box id from the QR (?box=DEMO7K2)
-  var boxId = new URLSearchParams(location.search).get('box') || 'DEMO7K2';
-  document.getElementById('boxlabel').textContent = 'Box ' + boxId;
+  // box id = three-word code from the QR path (/demo/maple.river.otter) or ?box=
+  var seg = location.pathname.split('/').filter(Boolean);
+  var boxId = (seg.length >= 2 && (seg[0] === 'demo' || seg[0] === 'setup'))
+              ? decodeURIComponent(seg.slice(1).join('/'))
+              : (new URLSearchParams(location.search).get('box') || 'maple.river.otter');
+  document.getElementById('boxlabel').textContent = 'Box /// ' + boxId;
 
   // add / remove contacts
   document.getElementById('addContact').addEventListener('click', function(){
@@ -133,8 +148,10 @@
     var names = [].map.call(document.querySelectorAll('.cname'), function(i){return i.value;}).filter(Boolean);
     var steps = [].filter.call(document.querySelectorAll('.ladder input:checked'), Boolean).map(function(i){return i.dataset.l;});
     var voice = document.getElementById('voice').value;
+    var email = document.getElementById('email').value;
     var rows = '';
-    rows += '<div><span class="k">Box</span><span class="v">'+boxId+'</span></div>';
+    rows += '<div><span class="k">Box</span><span class="v">/// '+boxId+'</span></div>';
+    if(email) rows += '<div><span class="k">Account</span><span class="v">'+email+'</span></div>';
     rows += '<div><span class="k">Name</span><span class="v">'+who+'</span></div>';
     rows += '<div><span class="k">Dose window</span><span class="v">'+win+'</span></div>';
     rows += '<div><span class="k">Alerts to</span><span class="v">'+(names.length?names.join(', '):'—')+'</span></div>';

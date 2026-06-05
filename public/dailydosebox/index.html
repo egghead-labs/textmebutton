@@ -3,8 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DailyDoseBox — the pill box that texts you back</title>
-<meta name="description" content="A handsome wooden pill box that knows when it should be opened. Miss your daily window and it texts your people, speaks up out loud, and can even place a call. Set it up in 60 seconds by scanning the box.">
+<title>DailyDoseBox | The Wooden Pill Box That Texts You Back</title>
+<meta name="description" content="A handsome wooden pill box that knows when it should be opened. Miss the daily window and it chimes, texts your people, and can even call. No app, no subscription, 3-word setup.">
+<meta property="og:title" content="The pill box that texts you back">
+<meta property="og:description" content="Peace of mind for caring for an aging parent. Open the lid to check in. If the box stays shut, DailyDoseBox escalates: chime, text, voice, caregiver text, call.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="assets/box-qr-composite.jpg">
 <style>
   :root{
     --navy:#0E2A3B; --teal:#14B8A6; --teal-d:#0E9488; --coral:#FF6B5E; --coral-d:#F2503F;
@@ -71,9 +75,9 @@
     <div class="brand"><span class="dot"></span> DailyDoseBox</div>
     <nav>
       <a href="#how">How it works</a>
-      <a href="#setup">Setup</a>
-      <a href="#who">Who it's for</a>
-      <a class="navcta" href="setup.html">Try the demo</a>
+      <a href="/pricing.html">Pricing</a>
+      <a href="/faq.html">FAQ</a>
+      <a class="navcta" href="/demo.html">Try the demo</a>
     </nav>
   </div>
 </header>
@@ -85,7 +89,7 @@
       <h1>The pill box that texts you back.</h1>
       <p class="lead">A handsome wooden box that knows when it should be opened. Miss the daily window and it texts your people, speaks up out loud, and can even place a call.</p>
       <div class="cta-row">
-        <a class="btn" href="setup.html">Try the setup demo</a>
+        <a class="btn" href="/demo.html">Try the setup demo</a>
         <a class="btn ghost" href="#how">See how it works</a>
       </div>
       <p class="trust">No daily app to remember. <b>Open the box, that is the whole interaction.</b></p>
@@ -137,10 +141,10 @@
       <h2>Every box has its own code.</h2>
       <p>A QR code on the lid resolves to <b>that exact box</b>. Scan it and you land on its private settings, no account hunting, no serial numbers to type.</p>
       <p>Set the dose window, add the contacts, and arrange the escalation ladder. Change it any time, from anywhere. One box for the morning pills, another for the evening, each with its own people and rules.</p>
-      <p><a class="btn" href="setup.html">Open the setup demo</a></p>
+      <p><a class="btn" href="/demo.html">Open the setup demo</a></p>
     </div>
     <div class="qrwrap">
-      <a href="setup.html"><img src="assets/qr-card.png" alt="DailyDoseBox QR card that resolves to a specific box's setup page"></a>
+      <a href="/demo.html"><img src="assets/qr-card.png" alt="DailyDoseBox QR card that resolves to a specific box's setup page"></a>
     </div>
   </div>
 </section>
@@ -151,7 +155,7 @@
     <div class="use">
       <div class="card"><h3>Aging parents</h3><p>Independence at home, with grown kids quietly in the loop. The first missed morning is the one you want to know about.</p></div>
       <div class="card"><h3>Vitamins &amp; routines</h3><p>The supplements, drops, and daily habits that are easy to forget. A gentle nudge keeps a new routine from quietly slipping.</p></div>
-      <div class="card"><h3>Caregivers &amp; small homes</h3><p>One dashboard for many boxes and many residents, so a single missed dose never slips through a busy shift.</p></div>
+      <div class="card"><h3>Caregivers &amp; small homes</h3><p>Manage several boxes from one login, each with its own people and rules, so a single missed dose never slips through a busy shift.</p></div>
     </div>
   </div>
 </section>
@@ -162,11 +166,24 @@
       <span class="eyebrow">Pre-order</span>
       <h2>Be first to put one on the nightstand.</h2>
       <p style="color:var(--muted);max-width:46ch;margin:0 auto 6px">Join the DailyDoseBox list. We will send launch pricing, early-bird units, and a note the day pre-orders open.</p>
-      <form class="wait" onsubmit="event.preventDefault(); this.querySelector('input').value=''; this.nextElementSibling.style.display='block';">
+      <form class="wait" id="waitForm">
         <input type="email" required placeholder="you@email.com" aria-label="Email address">
         <button class="btn" type="submit">Notify me</button>
       </form>
-      <p class="fine" style="display:none;color:var(--teal-d);font-weight:700">Thanks, you are on the list.</p>
+      <p class="fine" id="waitMsg" style="display:none;color:var(--teal-d);font-weight:700">Thanks, you are on the list.</p>
+      <script>
+        document.getElementById('waitForm').addEventListener('submit', async function(e){
+          e.preventDefault();
+          var input = this.querySelector('input'), msg = document.getElementById('waitMsg');
+          var email = input.value.trim();
+          try{
+            var r = await fetch('/api/waitlist', {method:'POST', headers:{'content-type':'application/json'}, body:JSON.stringify({email:email})});
+            if(r.ok){ input.value=''; msg.textContent='Thanks, you are on the list.'; msg.style.color='var(--teal-d)'; }
+            else { msg.textContent='That email did not look right. Try again?'; msg.style.color='var(--coral-d)'; }
+          }catch(err){ msg.textContent='Something went wrong. Please try again.'; msg.style.color='var(--coral-d)'; }
+          msg.style.display='block';
+        });
+      </script>
       <p class="fine">Built on simple one-action hardware. The kinder use case.</p>
     </div>
   </div>
@@ -174,7 +191,7 @@
 
 <footer>
   <div class="wrap">
-    <div>© 2026 DailyDoseBox</div>
+    <div><a href="/pricing.html">Pricing</a><a href="/faq.html">FAQ</a><a href="/demo.html">Set up a box</a> &nbsp;·&nbsp; © 2026 DailyDoseBox</div>
     <div>Not a medical device. DailyDoseBox is a daily check-in aid, not a substitute for medical care.</div>
   </div>
 </footer>
