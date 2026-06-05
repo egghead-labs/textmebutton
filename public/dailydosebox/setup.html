@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Set up your DailyDoseBox</title>
+<meta name="description" content="Set up this DailyDoseBox: choose the dose window, add who gets the alert, and arrange the escalation ladder.">
+<style>
+  :root{--navy:#0E2A3B;--teal:#14B8A6;--teal-d:#0E9488;--coral:#FF6B5E;--coral-d:#F2503F;--paper:#fff;--mist:#F2F7F8;--line:#D9E4E7;--ink:#0E2A3B;--muted:#5B7180;--shadow:0 18px 50px rgba(14,42,59,.14)}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--mist);color:var(--ink);font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+  .top{background:var(--navy);color:#fff;padding:20px 0}
+  .wrap{max-width:560px;margin:0 auto;padding:0 18px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px}
+  .brand .dot{width:13px;height:13px;border-radius:50%;background:var(--coral);box-shadow:0 0 0 4px rgba(255,107,94,.18)}
+  .top small{color:#9FB8C2;display:block;margin-top:4px;font-size:13px}
+  main{padding:22px 0 60px}
+  h1{font-size:26px;margin:6px 0 2px} .sub{color:var(--muted);margin:0 0 20px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px;margin-bottom:16px;box-shadow:0 4px 16px rgba(14,42,59,.05)}
+  .card h2{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--teal-d);margin:0 0 14px}
+  label{display:block;font-weight:600;font-size:14px;margin:12px 0 6px}
+  input,select{width:100%;padding:13px 14px;border:1px solid var(--line);border-radius:12px;font-size:16px;font-family:inherit;background:#fff}
+  input:focus,select:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(20,184,166,.15)}
+  .row{display:flex;gap:12px} .row>div{flex:1}
+  .contact{display:flex;gap:10px} .contact input{flex:1}
+  .contact .del{flex:0 0 auto;width:46px;border:1px solid var(--line);background:#fff;border-radius:12px;font-size:20px;color:var(--muted);cursor:pointer}
+  .addbtn{margin-top:10px;background:transparent;border:1.5px dashed var(--line);color:var(--teal-d);font-weight:700;padding:11px;width:100%;border-radius:12px;cursor:pointer}
+  .ladder label.chk{display:flex;align-items:center;gap:12px;font-weight:500;border:1px solid var(--line);border-radius:12px;padding:13px 14px;margin-bottom:10px;cursor:pointer}
+  .ladder input[type=checkbox]{width:22px;height:22px;accent-color:var(--teal);flex:0 0 auto}
+  .ladder .when{font-size:12px;color:var(--coral-d);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+  .save{width:100%;background:var(--coral);color:#fff;font-weight:800;font-size:18px;border:0;border-radius:40px;padding:17px;cursor:pointer;box-shadow:var(--shadow)}
+  .save:hover{background:var(--coral-d)}
+  .fine{font-size:12px;color:var(--muted);text-align:center;margin-top:14px}
+  .done{display:none;text-align:center;padding:40px 10px}
+  .done .tick{width:84px;height:84px;border-radius:50%;background:var(--teal);margin:0 auto 18px;display:grid;place-items:center}
+  .done .tick svg{width:44px;height:44px}
+  .done h1{font-size:28px} .summary{text-align:left;background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;margin:18px 0}
+  .summary div{padding:7px 0;border-bottom:1px solid var(--mist);display:flex;justify-content:space-between;gap:12px;font-size:14px}
+  .summary div:last-child{border:0} .summary .k{color:var(--muted)} .summary .v{font-weight:700;text-align:right}
+  .pill{display:inline-block;font-size:12px;font-weight:700;padding:3px 9px;border-radius:20px;background:rgba(20,184,166,.14);color:var(--teal-d);margin:2px 0 2px 4px}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap">
+  <div class="brand"><span class="dot"></span> DailyDoseBox</div>
+  <small id="boxlabel">Setting up box …</small>
+</div></div>
+
+<main class="wrap">
+  <!-- FORM -->
+  <form id="setupForm">
+    <h1>Set up this box</h1>
+    <p class="sub">Takes about a minute. You can change any of it later from this same link.</p>
+
+    <div class="card">
+      <h2>Who is it for</h2>
+      <label for="who">Name on this box</label>
+      <input id="who" placeholder="e.g. Mom's morning meds" required>
+    </div>
+
+    <div class="card">
+      <h2>Dose window</h2>
+      <p style="margin:0 0 6px;color:var(--muted);font-size:14px">Open the box any time inside this window and you are checked in.</p>
+      <div class="row">
+        <div><label for="start">From</label><input id="start" type="time" value="08:00" required></div>
+        <div><label for="end">Until</label><input id="end" type="time" value="10:00" required></div>
+      </div>
+      <label for="days">Repeat</label>
+      <select id="days"><option>Every day</option><option>Weekdays</option><option>Weekends</option></select>
+    </div>
+
+    <div class="card">
+      <h2>Who gets the alert</h2>
+      <div id="contacts">
+        <div class="contact"><input class="cname" placeholder="Name (e.g. Sarah)"><input class="cphone" type="tel" placeholder="Mobile number"><button type="button" class="del" title="Remove">×</button></div>
+      </div>
+      <button type="button" class="addbtn" id="addContact">+ Add another contact</button>
+    </div>
+
+    <div class="card">
+      <h2>Spoken message (optional)</h2>
+      <label for="voice">Played out loud in the room if the box stays shut</label>
+      <input id="voice" placeholder='e.g. "Hi Mom, time for your morning pills."'>
+    </div>
+
+    <div class="card ladder">
+      <h2>Escalation ladder</h2>
+      <label class="chk"><input type="checkbox" checked data-l="Chime + light on the box"><span><span class="when">At window's end</span><br>Chime + light on the box</span></label>
+      <label class="chk"><input type="checkbox" checked data-l="Text the person"><span><span class="when">+10 min</span><br>Text the person</span></label>
+      <label class="chk"><input type="checkbox" checked data-l="Speak the message out loud"><span><span class="when">+20 min</span><br>Speak the message out loud</span></label>
+      <label class="chk"><input type="checkbox" checked data-l="Text a caregiver"><span><span class="when">+30 min</span><br>Text a caregiver</span></label>
+      <label class="chk"><input type="checkbox" data-l="Place a phone call"><span><span class="when">+45 min</span><br>Place a phone call</span></label>
+    </div>
+
+    <button class="save" type="submit">Save this box</button>
+    <p class="fine">DailyDoseBox reports whether the box was opened, not whether a dose was taken. It is a daily check-in aid, not a medical device.</p>
+  </form>
+
+  <!-- CONFIRMATION -->
+  <div class="done" id="done">
+    <div class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+    <h1>This box is all set.</h1>
+    <p class="sub" id="doneSub">We will watch the window and reach your people if it stays shut.</p>
+    <div class="summary" id="summary"></div>
+    <button class="save" onclick="location.reload()">Edit settings</button>
+    <p class="fine">Demo only — nothing was sent. A live box would save this to its private settings.</p>
+  </div>
+</main>
+
+<script>
+  // box id from the QR (?box=DEMO7K2)
+  var boxId = new URLSearchParams(location.search).get('box') || 'DEMO7K2';
+  document.getElementById('boxlabel').textContent = 'Box ' + boxId;
+
+  // add / remove contacts
+  document.getElementById('addContact').addEventListener('click', function(){
+    var d = document.createElement('div'); d.className = 'contact';
+    d.innerHTML = '<input class="cname" placeholder="Name"><input class="cphone" type="tel" placeholder="Mobile number"><button type="button" class="del" title="Remove">×</button>';
+    document.getElementById('contacts').appendChild(d);
+  });
+  document.getElementById('contacts').addEventListener('click', function(e){
+    if(e.target.classList.contains('del')){
+      var rows = document.querySelectorAll('#contacts .contact');
+      if(rows.length > 1) e.target.parentElement.remove();
+    }
+  });
+
+  // submit -> confirmation
+  document.getElementById('setupForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var who = document.getElementById('who').value || 'This box';
+    var win = document.getElementById('start').value + ' – ' + document.getElementById('end').value + '  (' + document.getElementById('days').value + ')';
+    var names = [].map.call(document.querySelectorAll('.cname'), function(i){return i.value;}).filter(Boolean);
+    var steps = [].filter.call(document.querySelectorAll('.ladder input:checked'), Boolean).map(function(i){return i.dataset.l;});
+    var voice = document.getElementById('voice').value;
+    var rows = '';
+    rows += '<div><span class="k">Box</span><span class="v">'+boxId+'</span></div>';
+    rows += '<div><span class="k">Name</span><span class="v">'+who+'</span></div>';
+    rows += '<div><span class="k">Dose window</span><span class="v">'+win+'</span></div>';
+    rows += '<div><span class="k">Alerts to</span><span class="v">'+(names.length?names.join(', '):'—')+'</span></div>';
+    if(voice) rows += '<div><span class="k">Spoken message</span><span class="v">"'+voice+'"</span></div>';
+    rows += '<div><span class="k">Escalation</span><span class="v">'+steps.map(function(s){return '<span class="pill">'+s+'</span>';}).join('')+'</span></div>';
+    document.getElementById('summary').innerHTML = rows;
+    document.getElementById('setupForm').style.display = 'none';
+    document.getElementById('done').style.display = 'block';
+    window.scrollTo(0,0);
+  });
+</script>
+</body>
+</html>
