@@ -8,9 +8,8 @@ printed big so anyone can scan OR type them at dailydosebox.com/demo.
 """
 import cairosvg, segno
 
-WORDS  = "maple.river.otter"                 # the box's 3-word code
-BASE   = "dailydosebox.com/demo"
-URL    = f"https://{BASE}/{WORDS}"
+WORDS  = "maple.river.otter"                 # the box's 3-word code (the ?box= value)
+URL    = f"https://dailydosebox.com/setup?box={WORDS}"
 
 PW, PH = 612, 792
 NAVY="#0E2A3B"; TEAL="#14B8A6"; CORAL="#FF6B5E"; MUTED="#5B7180"
@@ -56,7 +55,7 @@ svg = f'''<?xml version="1.0" encoding="UTF-8"?>
 
   <text x="{cx}" y="{lbl_y}" text-anchor="middle" font-size="12" fill="{MUTED}" letter-spacing="1">YOUR BOX SETUP CODE</text>
   <text x="{cx}" y="{word_y}" text-anchor="middle" font-size="26" font-weight="800" letter-spacing="0.5">{words_svg}</text>
-  <text x="{cx}" y="{url_y}" text-anchor="middle" font-size="12.5" fill="{MUTED}">Go to dailydosebox.com/demo and type your three words.</text>
+  <text x="{cx}" y="{url_y}" text-anchor="middle" font-size="12.5" fill="{MUTED}">Go to dailydosebox.com/setup and type your three words.</text>
 </svg>'''
 
 cairosvg.svg2pdf(bytestring=svg.encode("utf-8"), write_to="DailyDoseBox-Box-QR.pdf")

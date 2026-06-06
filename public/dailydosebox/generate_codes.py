@@ -12,7 +12,7 @@ this ships a ~140-word clean starter list, enough for batches and demos.
 import sys, csv, random
 import segno, cairosvg
 
-BASE = "dailydosebox.com/demo"
+BASE = "dailydosebox.com/setup?box="
 N = int(sys.argv[1]) if len(sys.argv) > 1 else 8
 random.seed(7)  # reproducible batches
 
@@ -42,7 +42,7 @@ while len(codes) < N:
 with open("codes.csv", "w", newline="") as f:
     w = csv.writer(f); w.writerow(["three_words", "setup_url"])
     for c in codes:
-        w.writerow([c, f"https://{BASE}/{c}"])
+        w.writerow([c, f"https://{BASE}{c}"])
 
 # print sheet (8 cards per Letter page; first 8 codes)
 PW, PH = 612, 792
@@ -54,7 +54,7 @@ CH = (PH - 2*MY) / ROWS
 QR = 92
 
 def card(cx, cy, code):
-    qr = segno.make(f"https://{BASE}/{code}", error="h")
+    qr = segno.make(f"https://{BASE}{code}", error="h")
     m = [list(r) for r in qr.matrix]; n = len(m); mod = QR/n
     qx = cx + (CW-QR)/2; qy = cy + 22
     rects = "".join(f'<rect x="{qx+c*mod:.2f}" y="{qy+r*mod:.2f}" width="{mod:.2f}" height="{mod:.2f}"/>'

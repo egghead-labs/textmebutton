@@ -3,8 +3,8 @@
 import numpy as np, segno
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
-URL    = "https://dailydosebox.com/setup?box=DEMO7K2"
-BOX_ID = "DEMO7K2"
+BOX_ID = "maple.river.otter"
+URL    = f"https://dailydosebox.com/setup?box={BOX_ID}"
 NAVY=(14,42,59); TEAL=(20,184,166); CORAL=(255,107,94); PAPER=(255,255,255); MUTED=(91,113,128)
 NAVY_H="#0E2A3B"
 

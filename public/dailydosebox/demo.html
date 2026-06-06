@@ -35,7 +35,7 @@
         <p class="err" id="err"></p>
         <button class="btn" type="submit" style="width:100%">Set up my box</button>
       </form>
-      <p class="hint" style="margin-top:18px">Scanning the QR on the lid does this for you automatically. Just trying it out? Use <a href="/demo/maple.river.otter">maple.river.otter</a>.</p>
+      <p class="hint" style="margin-top:18px">Scanning the QR on the lid does this for you automatically. Just trying it out? Use <a href="/setup?box=maple.river.otter">maple.river.otter</a>.</p>
     </div>
   </div>
 </section>
@@ -53,7 +53,7 @@
     e.preventDefault();
     var a=clean(w1.value), b=clean(w2.value), c=clean(w3.value);
     if(!a||!b||!c){ document.getElementById('err').textContent='Please enter all three words.'; return; }
-    location.href = '/demo/' + a + '.' + b + '.' + c;
+    location.href = '/setup?box=' + a + '.' + b + '.' + c;
   });
 </script>
 </body>
